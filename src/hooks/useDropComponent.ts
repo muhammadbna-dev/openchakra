@@ -1,11 +1,13 @@
 import { useDrop, DropTargetMonitor } from 'react-dnd'
-import { rootComponents } from '~utils/editor'
 import useDispatch from './useDispatch'
-import builder from '~core/models/composer/builder'
+import builder from '~design-systems/chakra/composer/builder'
+import { getRootComponents } from '~design-systems/factory'
+import { ComponentType, MetaComponentType } from '~design-systems/types'
+import { ComponentItemProps } from '~react-app-env'
 
 export const useDropComponent = (
   componentId: string,
-  accept: (ComponentType | MetaComponentType)[] = rootComponents,
+  accept: (ComponentType | MetaComponentType)[] = getRootComponents(),
   canDrop: boolean = true,
 ) => {
   const dispatch = useDispatch()

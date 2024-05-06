@@ -1,3 +1,4 @@
+import { IComponents } from '~react-app-env'
 import { generateId } from './generateId'
 import { duplicateComponent, deleteComponent } from './recursive'
 

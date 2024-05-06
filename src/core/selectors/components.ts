@@ -1,5 +1,6 @@
 import map from 'lodash/map'
 import { RootState } from '~core/store'
+import { IComponent } from '~react-app-env'
 
 export const getComponents = (state: RootState) =>
   state.components.present.components
@@ -10,13 +11,6 @@ export const getComponentBy = (nameOrId: string | IComponent['id']) => (
 
 export const getSelectedComponent = (state: RootState) =>
   state.components.present.components[state.components.present.selectedId]
-
-export const getPropsForSelectedComponent = (
-  state: RootState,
-  propsName: string,
-) =>
-  state.components.present.components[state.components.present.selectedId]
-    .props[propsName]
 
 export const getSelectedComponentId = (state: RootState) =>
   state.components.present.selectedId

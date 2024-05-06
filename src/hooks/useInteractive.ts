@@ -7,6 +7,7 @@ import {
   getIsHovered,
 } from '../core/selectors/components'
 import { getShowLayout, getFocusedComponent } from '../core/selectors/app'
+import { IComponent } from '~react-app-env'
 
 export const useInteractive = (
   component: IComponent,

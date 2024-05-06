@@ -1,6 +1,7 @@
 import React, { useRef } from 'react'
 import { XYCoord, useDrop, DragObjectWithType, useDrag } from 'react-dnd'
 import ElementListItem from './ElementListItem'
+import { IComponent } from '~react-app-env'
 
 interface Props extends Pick<IComponent, 'type' | 'id'> {
   index: number

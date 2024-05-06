@@ -1,13 +1,16 @@
 import { getParameters } from 'codesandbox/lib/api/define'
+import { getPackageJsonDeps } from '~design-systems/factory'
 
 export const buildParameters = (
   code: string,
   isTypeScript: boolean,
+  designSystems
 ): string => {
-  return getParameters({
-    files: {
-      'public/index.html': {
-        content: `<!DOCTYPE html>
+  return (
+    getParameters({
+      files: {
+        'public/index.html': {
+          content: `<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -27,10 +30,10 @@ export const buildParameters = (
 </body>
 
 </html>`,
-        isBinary: false,
-      },
-      [isTypeScript ? 'index.tsx' : 'index.js']: {
-        content: `import React from "react";
+          isBinary: false,
+        },
+        [isTypeScript ? 'index.tsx' : 'index.js']: {
+          content: `import React from "react";
 import ReactDOM from "react-dom";
 
 import App from "./App";
@@ -38,26 +41,21 @@ import App from "./App";
 const rootElement = document.getElementById("root");
 ReactDOM.render(<App />, rootElement);
 `,
-        isBinary: false,
-      },
-      [isTypeScript ? 'App.tsx' : 'App.jsx']: {
-        content: code,
-        isBinary: false,
-      },
-      'package.json': {
-        content: `{
+          isBinary: false,
+        },
+        [isTypeScript ? 'App.tsx' : 'App.jsx']: {
+          content: code,
+          isBinary: false,
+        },
+        'package.json': {
+          content: `{
   "name": "react",
   "version": "1.0.0",
   "description": "",
   "keywords": [],
   "main": "src/${isTypeScript ? 'index.tsx' : 'index.js'}",
   "dependencies": {
-    "@chakra-ui/icons": "^2.0.9",
-    "@chakra-ui/react": "^2.3.2",
-    "@chakra-ui/theme": "^2.1.11",
-    "@emotion/react": "^11.10.4",
-    "@emotion/styled": "^11.10.4",
-    "framer-motion": "7.3.0",
+    ${getPackageJsonDeps(designSystems)}
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "^5.0.1"
@@ -80,8 +78,9 @@ ReactDOM.render(<App />, rootElement);
     "not op_mini all"
   ]
 }`,
-        isBinary: false,
+          isBinary: false,
+        },
       },
-    },
-  })
+    }),
+  )
 }

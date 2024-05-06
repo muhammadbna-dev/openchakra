@@ -1,3 +1,4 @@
+import { IComponents } from '~react-app-env'
 import { generateComponentCode, generateCode, formatCode } from './code'
 
 const componentFixtures: IComponents = {

@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux'
 import useDispatch from '~hooks/useDispatch'
 import { getComponents } from '~core/selectors/components'
 import { getShowLayout, getShowCode } from '~core/selectors/app'
-import ComponentPreview from '~components/editor/ComponentPreview'
+import { getComponentPreview } from '~design-systems/factory'
 
 export const gridStyles = {
   backgroundImage:
@@ -75,9 +75,9 @@ const Editor: React.FC = () => {
         </Text>
       )}
 
-      {components.root.children.map((name: string) => (
-        <ComponentPreview key={name} componentName={name} />
-      ))}
+      {components.root.children.map((name: string) =>
+        getComponentPreview({ key: name, componentName: name }),
+      )}
     </Box>
   )
 

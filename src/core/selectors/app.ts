@@ -1,4 +1,5 @@
 import { RootState } from '~core/store'
+import { IComponent } from '~react-app-env'
 
 export const getShowLayout = (state: RootState) => state.app.showLayout
 

@@ -20,7 +20,6 @@ import {
   Text,
 } from '@chakra-ui/react'
 import { CopyIcon, CheckIcon, EditIcon } from '@chakra-ui/icons'
-import Panels from '~components/inspector/panels/Panels'
 import { GoRepo, GoCode } from 'react-icons/go'
 import { FiTrash2 } from 'react-icons/fi'
 import { IoMdRefresh } from 'react-icons/io'
@@ -37,7 +36,7 @@ import ActionButton from './ActionButton'
 import { generateComponentCode, formatCode } from '~utils/code'
 import useClipboard from '~hooks/useClipboard'
 import { useInspectorUpdate } from '~contexts/inspector-context'
-import { componentsList } from '~componentsList'
+import { getComponentList, getPanels } from '~design-systems/factory'
 
 const CodeActionButton = memo(() => {
   const [isLoading, setIsLoading] = useState(false)
@@ -97,7 +96,7 @@ const Inspector = () => {
       !!componentName.match(/^[A-Z]\w*$/g) &&
       !componentsNames.includes(componentName) &&
       // @ts-ignore
-      !componentsList.includes(componentName)
+      !getComponentList().includes(componentName)
     )
   }, [componentName, componentsNames])
 
@@ -186,7 +185,7 @@ const Inspector = () => {
       </Box>
 
       <Box pb={1} bg="white" px={3}>
-        <Panels component={component} isRoot={isRoot} />
+        {getPanels({ component: component, isRoot: isRoot })}
       </Box>
 
       <StylesPanel

@@ -1,3 +1,5 @@
+import { IComponents } from '~react-app-env'
+
 export const secretchakra: IComponents = {
   root: {
     id: 'root',

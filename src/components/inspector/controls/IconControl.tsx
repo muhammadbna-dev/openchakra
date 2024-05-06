@@ -5,7 +5,7 @@ import { useForm } from '~hooks/useForm'
 import usePropsSelector from '~hooks/usePropsSelector'
 import InputSuggestion from '~components/inspector/inputs/InputSuggestion'
 import { ComboboxOption, ComboboxOptionText } from '@reach/combobox'
-import icons from '~iconsList'
+import { getIconList } from '~design-systems/factory'
 
 type IconControlProps = {
   name: string
@@ -15,6 +15,8 @@ type IconControlProps = {
 const IconControl: React.FC<IconControlProps> = ({ name, label }) => {
   const { setValueFromEvent } = useForm()
   const value = usePropsSelector(name)
+
+  const icons = getIconList()
 
   return (
     <FormControl label={label} htmlFor={name}>

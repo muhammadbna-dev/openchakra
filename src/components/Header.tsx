@@ -22,7 +22,6 @@ import {
   HStack,
 } from '@chakra-ui/react'
 import { ExternalLinkIcon, SmallCloseIcon, CheckIcon } from '@chakra-ui/icons'
-import { DiGithubBadge } from 'react-icons/di'
 import { AiFillThunderbolt } from 'react-icons/ai'
 import { SiTypescript } from 'react-icons/si'
 import { buildParameters } from '~utils/codesandbox'
@@ -33,6 +32,7 @@ import { getComponents } from '~core/selectors/components'
 import { getShowLayout, getShowCode } from '~core/selectors/app'
 import HeaderMenu from '~components/headerMenu/HeaderMenu'
 import { FaReact } from 'react-icons/fa'
+import { getDesignSystemByType } from '~design-systems/factory'
 
 const CodeSandboxButton = () => {
   const components = useSelector(getComponents)
@@ -41,8 +41,17 @@ const CodeSandboxButton = () => {
   const exportToCodeSandbox = async (isTypeScript: boolean) => {
     setIsLoading(true)
     const code = await generateCode(components)
+    const designSystems = [
+      ...new Set(
+        Object.values(components)
+          .map(component => component.type)
+          .filter(name => name !== 'root')
+          .map(name => getDesignSystemByType(name))
+          .filter(name => !!name),
+      ),
+    ]
     setIsLoading(false)
-    const parameters = buildParameters(code, isTypeScript)
+    const parameters = buildParameters(code, isTypeScript, designSystems)
 
     window.open(
       `https://codesandbox.io/api/v1/sandboxes/define?parameters=${parameters}`,
@@ -249,24 +258,6 @@ const Header = () => {
             </Popover>
           </Stack>
         </Flex>
-
-        <Stack
-          justifyContent="flex-end"
-          width="13rem"
-          align="center"
-          direction="row"
-          spacing="2"
-        >
-          <Link isExternal href="https://github.com/premieroctet/openchakra">
-            <Box as={DiGithubBadge} size={32} color="gray.200" />
-          </Link>
-          <Box lineHeight="shorter" color="white" fontSize="xs">
-            by{' '}
-            <Link isExternal href="https://premieroctet.com" color="teal.100">
-              Premier Octet
-            </Link>
-          </Box>
-        </Stack>
       </Flex>
     </DarkMode>
   )

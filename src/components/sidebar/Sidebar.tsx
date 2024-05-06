@@ -10,10 +10,12 @@ import {
 } from '@chakra-ui/react'
 import { CloseIcon, SearchIcon } from '@chakra-ui/icons'
 import DragItem from './DragItem'
-import { menuItems, MenuItem } from '~componentsList'
+import { getMenuItems } from '~design-systems/factory'
+import { ComponentType } from '~design-systems/types'
 
 const Menu = () => {
   const [searchTerm, setSearchTerm] = useState('')
+  const menuItems = getMenuItems()
 
   return (
     <DarkMode>
@@ -64,7 +66,7 @@ const Menu = () => {
           {(Object.keys(menuItems) as ComponentType[])
             .filter(c => c.toLowerCase().includes(searchTerm.toLowerCase()))
             .map(name => {
-              const { children, soon } = menuItems[name] as MenuItem
+              const { children, soon } = menuItems[name]
 
               if (children) {
                 const elements = Object.keys(children).map(childName => (

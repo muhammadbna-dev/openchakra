@@ -1,3 +1,4 @@
+import { IComponents } from '~react-app-env'
 import { onboarding } from './onboarding'
 import { productHunt } from './producthunt'
 import { secretchakra } from './secretchakra'

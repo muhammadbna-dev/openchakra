@@ -1,6 +1,11 @@
 import isBoolean from 'lodash/isBoolean'
 import filter from 'lodash/filter'
-import icons from '~iconsList'
+import {
+  getAppCode,
+  getIconList,
+  getDesignSystemByType,
+} from '~design-systems/factory'
+import { IComponent, IComponents } from '~react-app-env'
 
 const capitalize = (value: string) => {
   return value.charAt(0).toUpperCase() + value.slice(1)
@@ -19,7 +24,9 @@ export const formatCode = async (code: string) => {
       semi: false,
       singleQuote: true,
     })
-  } catch (e) {}
+  } catch (e) {
+    console.error(e)
+  }
 
   return formattedCode
 }
@@ -32,6 +39,8 @@ type BuildBlockParams = {
 
 const buildStyledProps = (propsNames: string[], childComponent: IComponent) => {
   let propsContent = ``
+
+  const icons = getIconList()
 
   propsNames.forEach((propName: string) => {
     const propsValue = childComponent.props[propName]
@@ -191,27 +200,10 @@ export const generateCode = async (components: IComponents) => {
         .map(name => components[name].type),
     ),
   ]
+  const designSystems = imports
+    .map(name => getDesignSystemByType(name))
+    .filter(name => !!name)
 
-  code = `import React from 'react';
-import {
-  ChakraProvider,
-  ${imports.join(',')}
-} from "@chakra-ui/react";${
-    iconImports.length
-      ? `
-import { ${iconImports.join(',')} } from "@chakra-ui/icons";`
-      : ''
-  }
-
-${componentsCodes}
-
-const App = () => (
-  <ChakraProvider resetCSS>
-    ${code}
-  </ChakraProvider>
-);
-
-export default App;`
-
+  code = getAppCode(designSystems, imports, iconImports, componentsCodes, code)
   return await formatCode(code)
 }
