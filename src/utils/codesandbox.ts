@@ -4,13 +4,12 @@ import { getPackageJsonDeps } from '~design-systems/factory'
 export const buildParameters = (
   code: string,
   isTypeScript: boolean,
-  designSystems
+  designSystems,
 ): string => {
-  return (
-    getParameters({
-      files: {
-        'public/index.html': {
-          content: `<!DOCTYPE html>
+  return getParameters({
+    files: {
+      'public/index.html': {
+        content: `<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -30,10 +29,10 @@ export const buildParameters = (
 </body>
 
 </html>`,
-          isBinary: false,
-        },
-        [isTypeScript ? 'index.tsx' : 'index.js']: {
-          content: `import React from "react";
+        isBinary: false,
+      },
+      [isTypeScript ? 'index.tsx' : 'index.js']: {
+        content: `import React from "react";
 import ReactDOM from "react-dom";
 
 import App from "./App";
@@ -41,14 +40,14 @@ import App from "./App";
 const rootElement = document.getElementById("root");
 ReactDOM.render(<App />, rootElement);
 `,
-          isBinary: false,
-        },
-        [isTypeScript ? 'App.tsx' : 'App.jsx']: {
-          content: code,
-          isBinary: false,
-        },
-        'package.json': {
-          content: `{
+        isBinary: false,
+      },
+      [isTypeScript ? 'App.tsx' : 'App.jsx']: {
+        content: code,
+        isBinary: false,
+      },
+      'package.json': {
+        content: `{
   "name": "react",
   "version": "1.0.0",
   "description": "",
@@ -78,9 +77,8 @@ ReactDOM.render(<App />, rootElement);
     "not op_mini all"
   ]
 }`,
-          isBinary: false,
-        },
+        isBinary: false,
       },
-    }),
-  )
+    },
+  })
 }
