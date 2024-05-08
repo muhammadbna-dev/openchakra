@@ -67,12 +67,13 @@ export const getDefaultPropsByType = type => {
 }
 
 export const getPackageJsonDeps = (designSystems: DesignSystemType[]) => {
-  let deps = ''
+  let deps = {}
   designSystems.forEach(item => {
     if (item === CHAKRA_DESIGN_SYSTEM_TYPE) {
-      deps += CHAKRA_PACKAGE_JSON_DEPS
-    } else if (item === ANTD_DESIGN_SYSTEM_TYPE) {
-      deps += ANTD_PACKAGE_JSON_DEPS
+      deps = { ...deps, ...CHAKRA_PACKAGE_JSON_DEPS }
+    }
+    if (item === ANTD_DESIGN_SYSTEM_TYPE) {
+      deps = { ...deps, ...ANTD_PACKAGE_JSON_DEPS }
     }
   })
   return deps

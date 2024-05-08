@@ -1,4 +1,4 @@
-export const ANTD_PACKAGE_JSON_DEPS = `"antd": "^5.17.0",`
+export const ANTD_PACKAGE_JSON_DEPS = { antd: '^5.17.0' }
 
 export const getAntdAppCode = (
   imports,

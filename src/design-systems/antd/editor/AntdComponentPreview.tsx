@@ -1,4 +1,4 @@
-import { DatePicker } from 'antd'
+import { DatePicker } from 'antd/lib'
 import React, { memo } from 'react'
 import PreviewContainer from '~design-systems/PreviewContainer'
 
